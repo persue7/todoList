@@ -4,6 +4,7 @@
       type="text"
       placeholder="请输入你的任务名称，按回车键确认"
       @keyup.enter="add"
+      v-model="title"
     />
   </div>
 </template>
@@ -12,10 +13,18 @@
 import { nanoid } from 'nanoid'
 export default {
   name: 'MyHeader',
+  props: ['addObj'],
+  data() {
+    return {
+      title: ''
+    }
+  },
   methods: {
-    add(e) {
-      const todoObj = { id: nanoid(), title: e.target.value, done: false }
-      console.log(todoObj);
+    add() {
+      if (!this.title.trim()) return alert('输入不能为空!')
+      const todoObj = { id: nanoid(), title: this.title, done: false }
+      this.addObj(todoObj)
+      this.title = ''
     }
   }
 }
