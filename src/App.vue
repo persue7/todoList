@@ -2,9 +2,17 @@
   <div id="root">
     <div class="todo-container">
       <div class="todo-wrap">
-        <MyHeader :addObj='addObj'></MyHeader>
-        <MyList :todoList='todoList'></MyList>
-        <MyFooter></MyFooter>
+        <MyHeader :addTodo='addTodo'></MyHeader>
+        <MyList
+          :todoList='todoList'
+          :checkTodo='checkTodo'
+          :deleteTodo='deleteTodo'
+        ></MyList>
+        <MyFooter
+          :todoList='todoList'
+          :checkALLTodo='checkALLTodo'
+          :deleteDoneTodo='deleteDoneTodo'
+        ></MyFooter>
       </div>
     </div>
   </div>
@@ -33,8 +41,30 @@ export default {
     }
   },
   methods: {
-    addObj(obj) {
+    addTodo(obj) {
       this.todoList.unshift(obj)
+    },
+    checkTodo(id) {
+      this.todoList.forEach(todo => {
+        if (todo.id === id) {
+          todo.done = !todo.done
+        }
+      })
+    },
+    deleteTodo(id) {
+      this.todoList = this.todoList.filter(todo => {
+        return todo.id !== id
+      })
+    },
+    checkALLTodo(val) {
+      this.todoList.forEach(todo => {
+        todo.done = val
+      })
+    },
+    deleteDoneTodo() {
+      this.todoList = this.todoList.filter(todo => {
+        return !todo.done
+      })
     }
   },
 }
