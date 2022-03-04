@@ -33,11 +33,7 @@ export default {
   },
   data() {
     return {
-      todoList: [
-        { id: '001', title: '吃饭', done: true },
-        { id: '002', title: '睡觉', done: false },
-        { id: '003', title: '打豆豆', done: true }
-      ]
+      todoList: JSON.parse(localStorage.getItem('todoList')) || []
     }
   },
   methods: {
@@ -67,6 +63,14 @@ export default {
       })
     }
   },
+  watch: {
+    todoList: {
+      deep: true,
+      handler(value) {
+        localStorage.setItem('todoList', JSON.stringify(value))
+      }
+    }
+  }
 }
 </script>
 
